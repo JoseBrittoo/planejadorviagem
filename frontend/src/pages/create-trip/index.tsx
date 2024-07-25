@@ -4,6 +4,8 @@ import { InviteGuestsModal } from "./invite-guests-modal";
 import { ConfirmTripModal } from "./confirm-trip-modal";
 import { DestinationAndDateStep } from "./steps/destination-and-date-stao";
 import { InviteGuestsStep } from "./steps/invite-guests-step";
+import { DateRange } from "react-day-picker";
+import { api } from "../../lib/axios";
 
 export function CreateTripPage() {
   const navegate = useNavigate();
@@ -11,6 +13,12 @@ export function CreateTripPage() {
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false);
   const [isGuestsModalOpen, setIsGuestsModalOpen] = useState(false);
   const [isConfirmTripModalOpen, setIsConfirmTripModalOpen] = useState(false);
+
+  const [destination, setDestination] = useState('')
+  const [ownerName, setOwnerName] = useState('')
+  const [ownerEmail, setOwnerEmail] = useState('')
+  const [eventStartAndEndDates, setEventStartAndEndDate] = useState<DateRange | undefined>();
+
 
   const [emailsToInvite, setEmailsToInvite] = useState([
     "jose.brito@gmail.com",
@@ -39,6 +47,7 @@ export function CreateTripPage() {
   function closeGuestsModal() {
     setIsGuestsModalOpen(false);
   }
+
   // como está usando typescript precisa especificar que foi disparado de um formulário
   function addNewEmailToInvite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -67,10 +76,44 @@ export function CreateTripPage() {
     setEmailsToInvite(newEmailList);
   }
 
-  function createTrip(event: FormEvent<HTMLFormElement>) {
+async function createTrip(event: FormEvent<HTMLFormElement>) {
     // nao fazer o redirecionamento do usuario
     event.preventDefault();
-    navegate("/trips/123");
+
+    console.log(destination)
+    console.log(eventStartAndEndDates)
+    console.log(ownerName)
+    console.log(ownerEmail)
+    console.log(emailsToInvite)
+
+    if (!destination) {
+      return
+    }
+
+    if (!eventStartAndEndDates?.from || !eventStartAndEndDates?.to) {
+      return
+    }
+    
+    if (emailsToInvite.length === 0) {
+      return
+    }
+
+    if (!ownerName || !ownerEmail) {
+      return
+    }
+
+    const response = await api.post('/trips', {
+      destination,
+      start_at: eventStartAndEndDates.from,
+      ends_at: eventStartAndEndDates.to,
+      emails_to_inite: emailsToInvite,
+      owner_name: ownerName,
+      owner_email: ownerEmail
+    })
+    
+    const { tripId } = response.data
+    
+    navegate('/trips/${tripId}')
   }
 
   return (
@@ -88,8 +131,12 @@ export function CreateTripPage() {
             closeGuestsInput={closeGuestsInput}
             isGuestsInputOpen={isGuestsInputOpen}
             openGuestsInput={openGuestsInput}
+            setDestination={setDestination}
+            eventStartAndEndDates={eventStartAndEndDates}
+            setEventStartAndEndDate={setEventStartAndEndDate}
           />
 
+          {/* componentes */}
           {isGuestsInputOpen && (
             <InviteGuestsStep
               emailsToInvite={emailsToInvite}
@@ -126,6 +173,8 @@ export function CreateTripPage() {
         <ConfirmTripModal
           closeConfirmTripModal={closeConfirmTripModal}
           createTrip={createTrip}
+          setOwnerName={setOwnerName}
+          setOwnerEmail={setOwnerEmail}
         />
       )}
     </div>
