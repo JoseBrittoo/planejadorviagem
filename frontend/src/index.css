@@ -11,6 +11,6 @@ input{
 }
 
 .rdp-root {
-    --rdp-accent-color: #3b82f6; /* Change the accent color to indigo. */
+    --rdp-accent-color: #3b82f6; 
     --rdp-accent-background-color: #3b83f665; 
   }

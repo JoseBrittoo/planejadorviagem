@@ -2,23 +2,23 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InviteGuestsModal } from "./invite-guests-modal";
 import { ConfirmTripModal } from "./confirm-trip-modal";
-import { DestinationAndDateStep } from "./steps/destination-and-date-stao";
+import { DestinationAndDateStep } from "./steps/destination-and-date-step";
 import { InviteGuestsStep } from "./steps/invite-guests-step";
 import { DateRange } from "react-day-picker";
 import { api } from "../../lib/axios";
 
 export function CreateTripPage() {
-  const navegate = useNavigate();
+  const navigate = useNavigate();
 
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false);
   const [isGuestsModalOpen, setIsGuestsModalOpen] = useState(false);
   const [isConfirmTripModalOpen, setIsConfirmTripModalOpen] = useState(false);
 
-  const [destination, setDestination] = useState('')
-  const [ownerName, setOwnerName] = useState('')
-  const [ownerEmail, setOwnerEmail] = useState('')
-  const [eventStartAndEndDates, setEventStartAndEndDate] = useState<DateRange | undefined>();
-
+  const [destination, setDestination] = useState("");
+  const [ownerName, setOwnerName] = useState("");
+  const [ownerEmail, setOwnerEmail] = useState("");
+  const [eventStartAndEndDates, setEventStartAndEndDates] = useState<
+    DateRange | undefined>();
 
   const [emailsToInvite, setEmailsToInvite] = useState([
     "jose.brito@gmail.com",
@@ -76,44 +76,33 @@ export function CreateTripPage() {
     setEmailsToInvite(newEmailList);
   }
 
-async function createTrip(event: FormEvent<HTMLFormElement>) {
+  async function createTrip(event: FormEvent<HTMLFormElement>) {
     // nao fazer o redirecionamento do usuario
     event.preventDefault();
 
-    console.log(destination)
-    console.log(eventStartAndEndDates)
-    console.log(ownerName)
-    console.log(ownerEmail)
-    console.log(emailsToInvite)
+    console.log(destination);
+    console.log(eventStartAndEndDates);
+    console.log(ownerName);
+    console.log(ownerEmail);
+    console.log(emailsToInvite);
 
-    if (!destination) {
-      return
+    if (!destination || !eventStartAndEndDates?.from || !eventStartAndEndDates?.to || emailsToInvite.length === 0 || !ownerName || !ownerEmail) {
+      console.error("Todos os campos devem ser preenchidos");
+      return;
     }
 
-    if (!eventStartAndEndDates?.from || !eventStartAndEndDates?.to) {
-      return
-    }
-    
-    if (emailsToInvite.length === 0) {
-      return
-    }
-
-    if (!ownerName || !ownerEmail) {
-      return
-    }
-
-    const response = await api.post('/trips', {
+    const response = await api.post("/trips", {
       destination,
-      start_at: eventStartAndEndDates.from,
+      starts_at: eventStartAndEndDates.from,
       ends_at: eventStartAndEndDates.to,
-      emails_to_inite: emailsToInvite,
+      emails_to_invite: emailsToInvite,
       owner_name: ownerName,
       owner_email: ownerEmail
-    })
-    
-    const { tripId } = response.data
-    
-    navegate('/trips/${tripId}')
+    });
+
+    const { tripId } = response.data;
+
+    navigate(`/trips/${tripId}`)
   }
 
   return (
@@ -133,7 +122,7 @@ async function createTrip(event: FormEvent<HTMLFormElement>) {
             openGuestsInput={openGuestsInput}
             setDestination={setDestination}
             eventStartAndEndDates={eventStartAndEndDates}
-            setEventStartAndEndDate={setEventStartAndEndDate}
+            setEventStartAndEndDates={setEventStartAndEndDates}
           />
 
           {/* componentes */}
