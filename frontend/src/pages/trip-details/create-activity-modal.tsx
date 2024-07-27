@@ -18,15 +18,15 @@ export function CreateActivityModal({
 
     const data = new FormData(event.currentTarget);
 
-    const title = data.get("title")?.toString();
-    const accurs_at = data.get("accurs_at")?.toString();
+    const title = data.get('title')?.toString();
+    const occurs_at = data.get('occurs_at')?.toString();
 
     await api.post(`/trips/${tripId}/activities`, {
       title,
-      accurs_at,
-    });
+      occurs_at
+    })
 
-    closeCreateActivityModal();
+    window.document.location.reload()
   }
 
   return (
@@ -34,7 +34,7 @@ export function CreateActivityModal({
       <div className="w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Cadastrar atividade</h2>
+            <h2 className="text-lg font-semibold ">Cadastrar atividade</h2>
             <button type="button" onClick={closeCreateActivityModal}>
               <X className="size-4 text-zinc-400" />
             </button>
@@ -59,7 +59,7 @@ export function CreateActivityModal({
               <Calendar className="text-zinc-400 size-5" />
               <input
                 type="datetime-local"
-                name="accurs_at"
+                name="occurs_at"
                 placeholder="Data e horário da atividade"
                 className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
               />

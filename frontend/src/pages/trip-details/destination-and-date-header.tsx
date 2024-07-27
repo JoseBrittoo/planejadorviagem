@@ -17,6 +17,7 @@ export function DestinationAndDateHeader() {
 
   const { tripId } = useParams()
   const [trip, setTrip] = useState<Trip | undefined>()
+  
 
 
   // a função só execulta denovo quando o id muda

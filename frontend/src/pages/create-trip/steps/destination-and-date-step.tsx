@@ -20,10 +20,10 @@ export function DestinationAndDateStep({
   openGuestsInput,
   setDestination,
   setEventStartAndEndDates,
-  eventStartAndEndDates
+  eventStartAndEndDates,
 }: DestinationAndDateStepProps) {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-
+  
   function openDatePicker() {
     return setIsDatePickerOpen(true);
   }
