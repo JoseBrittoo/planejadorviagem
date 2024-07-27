@@ -163,8 +163,7 @@ export function CreateTripPage() {
           closeConfirmTripModal={closeConfirmTripModal}
           createTrip={createTrip}
           setOwnerName={setOwnerName}
-          setOwnerEmail={setOwnerEmail}
-        />
+          setOwnerEmail={setOwnerEmail} destination={""} eventStartAndEndDates={undefined}        />
       )}
     </div>
   );
