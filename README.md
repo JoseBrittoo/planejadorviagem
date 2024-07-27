@@ -2,6 +2,10 @@
 Convide seus amigos e planeje sua viagem!
 ![front](https://github.com/user-attachments/assets/bb0412e0-a346-40eb-b32b-b3e5781353f1)
 
+
+Utilizei a api desenvolvida durante o NLW Journey da Rocketseat.
+[api](https://github.com/rocketseat-education/nlw-journey-nodejs)
+
 ## 🛠️Ferramentas utilizadas
 Para o desenvolvimento utilizei as seguintes tecnologias:
 
@@ -12,3 +16,7 @@ Para o desenvolvimento utilizei as seguintes tecnologias:
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Tailwind_CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Nodejs](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+
+## Utilizei a api desenvolvida durante o NLW Journey da Rocketseat.
+[api](https://github.com/rocketseat-education/nlw-journey-nodejs)
